@@ -11,10 +11,11 @@ import com.dd2d.voca_block.Values.Common.Month.Temp
 
 object Values {
     object Main{
-        enum class View(val toKor: String){
+        enum class Screen(val tabName: String){
+            Intro("인트로"),
             UserProfile("내정보"),
             MemoryBook("암기장"),
-            Words("단어장"),
+            WordBook("단어장"),
             Setting("설정")
         }
 
@@ -38,12 +39,14 @@ object Values {
 
         const val DatabaseName = "voca_block"
 
+        const val MotivationWordMaxLength = 20
+
         object PreferenceValue{
             const val PrefName = "pref"
 
-            const val CheeringWord = "cheeringWord"
+            const val MotivationWord = "motivation"
 
-            const val DefaultCheeringWord = "터치해서 응원의 한마디를 적어봐요!"
+            const val DefaultMotivationWord = "탭해서 동기부여의 한마디를 적어봐요!"
         }
 
         enum class WordType(val description: String){
@@ -58,7 +61,7 @@ object Values {
          * @property[Largest] 25.sp
          * */
         enum class FontSize(val size: TextUnit){
-            Smallest(10.sp), Small(13.sp), Default(18.sp), Large(20.sp), Largest(25.sp);
+            Smallest(10.sp), Small(13.sp), Default(18.sp), Large(20.sp), Largest(25.sp), Unspecified(TextUnit.Unspecified)
         }
 
         /** @property[Temp] 각 ordinal 을 월에 맞추기 위해 있음. 사용X*/

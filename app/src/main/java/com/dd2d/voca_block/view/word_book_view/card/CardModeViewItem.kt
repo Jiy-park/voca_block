@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_view_mode.card
+package com.dd2d.voca_block.view.word_book_view.card
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState

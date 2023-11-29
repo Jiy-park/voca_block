@@ -23,8 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,14 +43,14 @@ import com.dd2d.voca_block.util.log
 
 
 @Composable
-fun MainView(
+fun MainView2(
     modifier: Modifier = Modifier,
     cheeringWord: String,
     onChangeCheeringWord: ()->Unit,
-    selectedView: Main.View,
+    selectedView: Main.Screen,
     categoryList: List<Category>,
     onClickCategory: (categoryId: Int)->Unit,
-    onChangeSelectedView: (Main.View)->Unit,
+    onChangeSelectedView: (Main.Screen)->Unit,
     content: @Composable () -> Unit,
 ){
     Log.d("LOG_CHECK", " :: MainView() -> start MainView")
@@ -94,7 +92,7 @@ fun MainView(
 @Composable
 fun AdditionalView(
     modifier: Modifier = Modifier,
-    selectedView: Main.View,
+    selectedView: Main.Screen,
     isOpenAdditionalView: Boolean,
     onCloseAdditionalView: ()->Unit,
     categoryList: List<Category>,
@@ -107,15 +105,15 @@ fun AdditionalView(
         modifier = modifier
     ) {
         when(selectedView){
-            Main.View.Words -> {
+            Main.Screen.WordBook -> {
                 WordsAdditionalView(
                     onCloseAdditionalView = { onCloseAdditionalView() },
                 ){
                     WordsAdditionalViewContent(categoryList = categoryList) { onClickCategory(it) }
                 }
             }
-            Main.View.UserProfile -> {}
-            Main.View.Setting -> {}
+            Main.Screen.UserProfile -> {}
+            Main.Screen.Setting -> {}
             else -> {}
         }
     }
@@ -257,12 +255,12 @@ private fun MainCenterView(modifier: Modifier = Modifier,  content: @Composable 
 
 @Composable
 private fun MainBottomView(
-    selectedView: Main.View,
-    onChangeSelectedView: (selected: Main.View)->Unit,
+    selectedView: Main.Screen,
+    onChangeSelectedView: (selected: Main.Screen)->Unit,
     modifier: Modifier = Modifier
 ){
-    val offsetList = List(Main.View.values().size){ i->
-        val mainView = Main.View.values()[i]
+    val offsetList = List(Main.Screen.values().size){ i->
+        val mainView = Main.Screen.values()[i]
         animateIntOffsetAsState(
             targetValue = if (selectedView == mainView) { IntOffset(0, -30) }
             else { IntOffset.Zero },
@@ -278,7 +276,7 @@ private fun MainBottomView(
             .height(50.dp)
             .background(color = Color.White)
     ) {
-        Main.View.values().forEachIndexed { index, mainView->
+        Main.Screen.values().forEachIndexed { index, mainView->
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = modifier
@@ -290,7 +288,7 @@ private fun MainBottomView(
                     ) { onChangeSelectedView(mainView) }
             ){
                 TT(
-                    text = mainView.toKor,
+                    text = mainView.tabName,
                     color = if(selectedView == mainView) { Color.Black } else { Color.Gray },
                     modifier = modifier
                 )

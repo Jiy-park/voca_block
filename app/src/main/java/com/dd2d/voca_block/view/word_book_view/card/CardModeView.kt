@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_view_mode.card
+package com.dd2d.voca_block.view.word_book_view.card
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animate
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,8 +27,7 @@ import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.Values.WordMode.Card.SwipeTo
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
-import com.dd2d.voca_block.util.log
-import com.dd2d.voca_block.view_model.WordCategoryViewModel
+import com.dd2d.voca_block.struct.WordCategory
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,7 +36,8 @@ fun CardModeView(
     list: List<Word>,
     fontSize: FontSize,
     categoryList: List<Category>,
-    wordCategoryViewModel: WordCategoryViewModel,
+    wordCategoryList: List<WordCategory>,
+    onUpdateWordCategory: (wordId: Int, categoryId: Int, onCategory: Boolean)->Unit,
     onChangeMemorize: (word: Word, isMemorized: Boolean)->Unit,
     modifier: Modifier = Modifier,
 ){
@@ -101,12 +100,11 @@ fun CardModeView(
                 ){ -it*2 }
             ) {
                 CategorySelector(
-                    wordCategory = getWordCategory(word, categoryList, wordCategoryViewModel)
+                    wordCategory = getWordCategory(word, categoryList, wordCategoryList)
                 ){
                     it?.let { afterSelect->
-                        afterSelect.log("dsad")
-                        afterSelect.forEachIndexed { i, (categoryId, onCategory)->
-                            wordCategoryViewModel.updateWordCategory(wordId = word.id, categoryId = categoryId, onCategory = onCategory)
+                        afterSelect.forEach { (categoryId, onCategory)->
+                            onUpdateWordCategory(word.id, categoryId, onCategory)
                         }
                     }
                     isOpenCategorySelector = !isOpenCategorySelector
@@ -120,13 +118,10 @@ fun CardModeView(
 fun getWordCategory(
     word: Word,
     categoryList: List<Category>,
-    wordCategoryViewModel: WordCategoryViewModel
+    wordCategoryList: List<WordCategory>,
 ): List<Pair<Category, Boolean>>{
     val wordId = word.id
-    val wordCategory = wordCategoryViewModel
-        .selectedCategory
-        .collectAsState(initial = emptyList())
-        .value
+    val wordCategory = wordCategoryList
         .asSequence()
         .filter { it.wordId == wordId }
         .map { it.categoryId }

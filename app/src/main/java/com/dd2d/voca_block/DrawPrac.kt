@@ -5,7 +5,6 @@ package com.dd2d.voca_block
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,13 +14,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.common_ui.CircleProgress
 import com.dd2d.voca_block.common_ui.SS
-import com.dd2d.voca_block.view_model.WordsViewModel
 import com.dd2d.voca_block.util.log
 import kotlin.random.Random
 
@@ -30,21 +26,19 @@ import kotlin.random.Random
 fun DrawPractice(
     modifier: Modifier = Modifier,
 ){
-    val viewModel = WordsViewModel(db = DB.getInstance(LocalContext.current))
-    val wordList = viewModel.wordList.collectAsState(initial = emptyList())
-    Column(
-        modifier = modifier,
-    ) {
-        CircleProgress(
-            current = wordList.value.count { it.memorized },
-            total = wordList.value.size
-        )
-//        Calendar { year, month, day ->
-//            year.log("year")
-//            month.log("month")
-//            day.log("day")
-//        }
-    }
+//    Column(
+//        modifier = modifier,
+//    ) {
+//        CircleProgress(
+//            current = wordList.value.count { it.memorized },
+//            total = wordList.value.size
+//        )
+////        Calendar { year, month, day ->
+////            year.log("year")
+////            month.log("month")
+////            day.log("day")
+////        }
+//    }
 
 }
 

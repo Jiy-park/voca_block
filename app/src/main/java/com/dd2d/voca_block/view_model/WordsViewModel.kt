@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dd2d.voca_block.DB
 import com.dd2d.voca_block.model.WordsModel
 import com.dd2d.voca_block.struct.Word
 import kotlinx.coroutines.Dispatchers
@@ -14,18 +13,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class WordsViewModel(db: DB): ViewModel(){
-    private val wordsModel = WordsModel(db)
+class WordsViewModel(private val wordsModel: WordsModel): ViewModel(){
 
     private var _wordList by mutableStateOf(flowOf<List<Word>>())
     val wordList: Flow<List<Word>>
         get() = _wordList
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            _wordList = wordsModel.getAllWord()
-            Log.d("LOG_CHECK", "WordsViewModel :: () -> complete init wordViewModel")
-        }
+        getAllWord()
+        Log.d("LOG_CHECK", "WordsViewModel :: () -> complete init wordViewModel")
     }
 
 

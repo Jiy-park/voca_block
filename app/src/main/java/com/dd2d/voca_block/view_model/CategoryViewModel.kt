@@ -3,7 +3,6 @@ package com.dd2d.voca_block.view_model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dd2d.voca_block.DB
 import com.dd2d.voca_block.model.CategoryModel
 import com.dd2d.voca_block.struct.Category
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class CategoryViewModel(db: DB): ViewModel() {
-    private val model = CategoryModel(db)
+class CategoryViewModel(categoryModel: CategoryModel): ViewModel() {
+    private val model = categoryModel
 
     private var _categoryList = flowOf<List<Category>>()
     val category: Flow<List<Category>>

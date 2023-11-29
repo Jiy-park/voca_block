@@ -3,7 +3,6 @@ package com.dd2d.voca_block.view_model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dd2d.voca_block.DB
 import com.dd2d.voca_block.model.WordCategoryModel
 import com.dd2d.voca_block.struct.WordCategory
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class WordCategoryViewModel(db: DB): ViewModel() {
-    private val model = WordCategoryModel(db)
+class WordCategoryViewModel(wordCategoryModel: WordCategoryModel): ViewModel() {
+    private val model = wordCategoryModel
 
     private var _selectedCategory = flowOf(emptyList<WordCategory>())
     val selectedCategory: Flow<List<WordCategory>>

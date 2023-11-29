@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_view_mode.card
+package com.dd2d.voca_block.view.word_book_view.card
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -30,14 +30,15 @@ import com.dd2d.voca_block.Values.WordMode
 import com.dd2d.voca_block.common_ui.TT
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
-import com.dd2d.voca_block.view_model.WordCategoryViewModel
+import com.dd2d.voca_block.struct.WordCategory
 
 @Composable
 fun CardMode (
     modifier: Modifier = Modifier,
     wordList: List<Word>,
-    categories: List<Category> = emptyList(),
-    wordCategoryViewModel: WordCategoryViewModel,
+    categoryList: List<Category>,
+    wordCategoryList: List<WordCategory>,
+    onUpdateWordCategory: (wordId: Int, categoryId: Int, onCategory: Boolean)->Unit,
     onChangeMode: (mode: WordMode)->Unit,
     onChangeMemorize: (word: Word, isMemorized: Boolean)->Unit,
 ){
@@ -50,8 +51,9 @@ fun CardMode (
         CardModeView(
             list = wordList,
             fontSize = fontSize,
-            categoryList = categories,
-            wordCategoryViewModel = wordCategoryViewModel,
+            categoryList = categoryList,
+            wordCategoryList = wordCategoryList,
+            onUpdateWordCategory = { wordId, categoryId, onCategory ->  onUpdateWordCategory(wordId, categoryId, onCategory) },
             onChangeMemorize = { word, isMemorized-> onChangeMemorize(word, isMemorized) },
             modifier = modifier
                 .align(Alignment.Center)
