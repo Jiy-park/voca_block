@@ -52,7 +52,8 @@ interface WordDao{
             "    FROM word_category_table\n" +
             "    WHERE categoryId = :categoryId \n" +
             ") AS target\n" +
-            "ON word_id = target.wordId")
+            "ON word_id = target.wordId\n" +
+            "ORDER BY target.wordId ASC")
     fun getAllByCategoryId(categoryId: Int): Flow<List<Word>>
 }
 

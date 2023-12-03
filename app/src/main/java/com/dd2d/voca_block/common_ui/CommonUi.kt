@@ -32,13 +32,13 @@ import com.dd2d.voca_block.util.log
 
 @Composable
 fun TT(
+    modifier: Modifier = Modifier,
     text: String,
     textAlign: TextAlign = TextAlign.Center,
     fontSize: FontSize = FontSize.Default,
     color: Color = Color.Black,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLine: Int = 1,
-    modifier: Modifier = Modifier,
 ){
     Text(
         text = text,

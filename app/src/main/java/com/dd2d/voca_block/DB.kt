@@ -6,8 +6,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.dd2d.voca_block.Values.Common.DatabaseName
 import com.dd2d.voca_block.DB.Companion.getInstance
+import com.dd2d.voca_block.Values.Common.DatabaseName
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.CategoryDao
 import com.dd2d.voca_block.struct.Word
@@ -27,14 +27,14 @@ class RoomCallback(val context: Context): RoomDatabase.Callback(){
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
         CoroutineScope(Dispatchers.IO).launch {
-            val db = getInstance(context)
+            val database = getInstance(context)
             writeFile(context = context, dataList = data){
                 readFile(context)
             }
-            dbUpdateByText(context = context, db = db, wordType = Values.Common.WordType.EnKr){
+            dbUpdateByText(context = context, db = database, wordType = Values.Common.WordType.EnKr){
                 it.log("end")
             }
-            db.categoryDao().insert(Category(id = 0, name = "북마크"))
+            database.categoryDao().insert(Category(id = 0, name = "북마크", description = "북마크한 단어 목록을 불러옵니다."))
         }
     }
 }

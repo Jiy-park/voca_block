@@ -1,6 +1,7 @@
 package com.dd2d.voca_block.view.main_view
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -53,8 +54,8 @@ fun MainViewTopPanel(
     ) {
         AnimatedVisibility(
             visible = onEdit,
-            enter = slideInHorizontally() + fadeIn(),
-            exit = slideOutHorizontally() + fadeOut()
+            enter = slideInHorizontally(animationSpec = tween(500)) + fadeIn(),
+            exit = slideOutHorizontally(animationSpec = tween(500)) + fadeOut()
         ) {
             var motiviation by remember { mutableStateOf(motivationWord) }
             TextField(
@@ -87,8 +88,8 @@ fun MainViewTopPanel(
         }
         AnimatedVisibility(
             visible = !onEdit,
-            enter = slideInHorizontally() + fadeIn(),
-            exit = slideOutHorizontally() + fadeOut()
+            enter = slideInHorizontally(animationSpec = tween(500)) + fadeIn(),
+            exit = slideOutHorizontally(animationSpec = tween(500)) + fadeOut()
         ) {
             TT(
                 text = if(motivationWord.isEmpty()) DefaultMotivationWord else "\"$motivationWord\"",

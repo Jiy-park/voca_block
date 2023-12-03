@@ -6,6 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dd2d.voca_block.Values.CategorySelectorValue
+import com.dd2d.voca_block.Values.CategorySelectorValue.AllWord
+import com.dd2d.voca_block.Values.CategorySelectorValue.MemorizedWord
+import com.dd2d.voca_block.Values.CategorySelectorValue.NotMemorizedWord
 import com.dd2d.voca_block.model.WordsModel
 import com.dd2d.voca_block.struct.Word
 import kotlinx.coroutines.Dispatchers
@@ -24,28 +28,41 @@ class WordsViewModel(private val wordsModel: WordsModel): ViewModel(){
         Log.d("LOG_CHECK", "WordsViewModel :: () -> complete init wordViewModel")
     }
 
-
-    fun getMemorizedWord(isMemorized: Boolean = true){
-        viewModelScope.launch {
-            _wordList = wordsModel.getMemorizedWord(isMemorized)
-            Log.d("LOG_CHECK", "WordsViewModel :: getMemorizedWord() -> afdadfasdfs")
-        }
-    }
-
     fun updateWordMemorized(word: Word, isMemorized: Boolean){
         viewModelScope.launch(Dispatchers.IO) {
              wordsModel.updateWord(word = word.copy(memorized = isMemorized))
         }
     }
 
-    fun getAllWord(){
+    /**- [wordList] 를 [categoryId] 에 해당하는 단어로 설정
+     * 1. [AllWord] 전체 단어
+     * 2. [MemorizedWord] 외운 단어
+     * 3. [NotMemorizedWord] 못 외운 단어
+     * 4. 그 외: [categoryId] 에 해당하는 단어
+     * @see [CategorySelectorValue]*/
+    fun selectByCategoryId(categoryId: Int){
+        when(categoryId){
+            AllWord.id -> { getAllWord() }
+            MemorizedWord.id -> { getAllByMemorize(true) }
+            NotMemorizedWord.id -> { getAllByMemorize(false) }
+            else -> { getAllByCategoryId(categoryId) }
+        }
+    }
+
+    private fun getAllWord(){
       viewModelScope.launch(Dispatchers.IO){
           _wordList = wordsModel.getAllWord()
       }
     }
 
-    fun getAllByCategoryId(categoryId: Int){
-        viewModelScope.launch(Dispatchers.IO){
+    private fun getAllByMemorize(isMemorized: Boolean = true){
+        viewModelScope.launch {
+            _wordList = wordsModel.getMemorizedWord(isMemorized)
+        }
+    }
+
+    private fun getAllByCategoryId(categoryId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
             _wordList = wordsModel.getAllByCategoryId(categoryId)
         }
     }

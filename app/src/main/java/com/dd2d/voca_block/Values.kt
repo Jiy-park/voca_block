@@ -2,12 +2,34 @@ package com.dd2d.voca_block
 
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.dd2d.voca_block.Values.CategorySelectorValue.AllWord
+import com.dd2d.voca_block.Values.CategorySelectorValue.MemorizedWord
+import com.dd2d.voca_block.Values.CategorySelectorValue.NotMemorizedWord
+import com.dd2d.voca_block.Values.Common.DatabaseName
+import com.dd2d.voca_block.Values.Common.Day
+import com.dd2d.voca_block.Values.Common.DefaultAutoScrollDelay
+import com.dd2d.voca_block.Values.Common.DetailType
+import com.dd2d.voca_block.Values.Common.DetailType.En
+import com.dd2d.voca_block.Values.Common.DetailType.Kr
+import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.Values.Common.FontSize.Default
 import com.dd2d.voca_block.Values.Common.FontSize.Large
 import com.dd2d.voca_block.Values.Common.FontSize.Largest
 import com.dd2d.voca_block.Values.Common.FontSize.Small
 import com.dd2d.voca_block.Values.Common.FontSize.Smallest
+import com.dd2d.voca_block.Values.Common.FontSize.Unspecified
+import com.dd2d.voca_block.Values.Common.IntroDuration
+import com.dd2d.voca_block.Values.Common.Month
 import com.dd2d.voca_block.Values.Common.Month.Temp
+import com.dd2d.voca_block.Values.Common.MotivationWordMaxLength
+import com.dd2d.voca_block.Values.Common.PreferenceValue
+import com.dd2d.voca_block.Values.Common.PreferenceValue.DefaultMotivationWord
+import com.dd2d.voca_block.Values.Common.PreferenceValue.MotivationWord
+import com.dd2d.voca_block.Values.Common.PreferenceValue.PrefName
+import com.dd2d.voca_block.Values.Common.WordType
+import com.dd2d.voca_block.Values.Common.WordType.EnKr
+import com.dd2d.voca_block.view_model.WordsViewModel
+
 
 object Values {
     object Main{
@@ -18,39 +40,49 @@ object Values {
             WordBook("단어장"),
             Setting("설정")
         }
-
-        enum class LoadingProcess{
-            InProcess, OnComplete, OnFail
-        }
     }
 
-    object Error{
-        const val InLoading = "로딩 중 에러 발생."
-        const val InInitializeViewModel = "단어장 소환 중 에러 방생."
-    }
-
+    /**
+     *- 앱에서 전체적으로 사용하는 변수
+     * @property[IntroDuration] 인트로 화면 지속 시간
+     * @property[DatabaseName] room 데이터베이스 이름
+     * @property[MotivationWordMaxLength] 메인 화면 중간의 동기부여의 한마디 의 최대 길이
+     * @property[DefaultAutoScrollDelay] [WordBookAutoOption] 의 autoScrollDelay 기본값
+     * @property[PreferenceValue] Preference 용
+     * @property[WordType] 단어의 종류, [WordType], [DetailType] 참조
+     * @property[FontSize] 앱 전반적인 폰트 사이즈
+     * @property[Month] 캘린더에 사용되는 월 변수
+     * @property[Day] 캘린더에 사용되는 요일 변수*/
     object Common{
-        /** 아이디에서 해당 단어가 몇번째 단어인지를 표기할 자리
-         *- 첫번째 단어일 경우 -> 000001
-         *- 열번째 단어일 경우 -> 000010*/
-        const val IdFieldSize = 6
-
         const val IntroDuration = 0L
-
         const val DatabaseName = "voca_block"
-
         const val MotivationWordMaxLength = 20
+        const val CategoryNameMaxLength = 20
+        const val DefaultAutoScrollDelay = 1500L
 
+        /** @property[PrefName] = "pref"
+         * @property[MotivationWord] = "motivation"
+         * @property[DefaultMotivationWord] = "탭해서 동기부여의 한마디를 적어봐요!"*/
         object PreferenceValue{
             const val PrefName = "pref"
-
             const val MotivationWord = "motivation"
-
             const val DefaultMotivationWord = "탭해서 동기부여의 한마디를 적어봐요!"
         }
 
-        enum class WordType(val description: String){
-            EnKr("영단어"),
+        /** 단어의 종류, [type.first] - word, [type.second] - mean
+         * @param[type] 단어의 타입을 Pair 형태로 반환
+         * @property[EnKr] 영어->한국어
+         * @see[DetailType]*/
+        enum class WordType(val type: Pair<DetailType, DetailType>){
+            EnKr(DetailType.En to DetailType.Kr),
+        }
+        /**
+         * 언어의 종류,
+         * @param[description] 언어 설명
+         * @property[En] 영어
+         * @property[Kr] 한국아*/
+        enum class DetailType(val description: String){
+            En("영어"), Kr("한국어")
         }
 
         /**
@@ -59,6 +91,7 @@ object Values {
          * @property[Default] 18.sp
          * @property[Large] 20.sp
          * @property[Largest] 25.sp
+         * @property[Unspecified] TextUnit.Unspecified
          * */
         enum class FontSize(val size: TextUnit){
             Smallest(10.sp), Small(13.sp), Default(18.sp), Large(20.sp), Largest(25.sp), Unspecified(TextUnit.Unspecified)
@@ -82,6 +115,18 @@ object Values {
         None, BlindWord, BlindMean, Random
     }
 
+
+    /**- 카테고리 선택에서 기본적으로 갖는 값.
+     * @property [AllWord] 전체 단어
+     * @property [MemorizedWord] 외운 단어
+     * @property [NotMemorizedWord] 못외운 단어
+     * @see [WordsViewModel.selectByCategoryId]*/
+    enum class CategorySelectorValue(val id: Int, val toName: String, val description: String){
+        AllWord(0, "전체 단어장", "전체 단어 목록을 불러옵니다."),
+        MemorizedWord(-1, "외운 단어", "외운 단어 목록을 불러옵니다."),
+        NotMemorizedWord(-2, "못외운 단어", "외우지 못한 단어 목록을 불러옵니다."),
+    }
+
     sealed class WordFilter{
         object None: WordFilter()
         object Bookmark: WordFilter()
@@ -90,11 +135,9 @@ object Values {
     }
 
     sealed class WordMode{
-
         object List: WordMode(){
 
         }
-
         object Card: WordMode(){
             sealed class SwipeTo{
                 object Up: SwipeTo()
@@ -118,7 +161,6 @@ object Values {
             val VerticalSwipeRange = -(CardMaxHeight -10F)..0F
         }
     }
-
 
     object Util{
         object LogWord{
