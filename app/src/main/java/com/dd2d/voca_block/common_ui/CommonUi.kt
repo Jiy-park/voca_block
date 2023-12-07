@@ -28,7 +28,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.dd2d.voca_block.R
 import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.struct.Word
-import com.dd2d.voca_block.util.log
 
 @Composable
 fun TT(
@@ -92,8 +91,7 @@ fun CircleProgress(
     modifier: Modifier = Modifier
 ){
     val animatedPercent = remember { Animatable(0F) }
-    total.log("total")
-    current.log("cur")
+
     LaunchedEffect(current, total){
         animatedPercent.animateTo(
             targetValue = if(total != 0) current/total.toFloat() else { 0F },

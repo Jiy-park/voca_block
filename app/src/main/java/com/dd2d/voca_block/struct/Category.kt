@@ -17,7 +17,7 @@ data class Category(
     @ColumnInfo("category_id")
     val id: Int = 0,
     val name: String,
-    val description: String,
+    val description: String = "내용 없음.",
 )
 
 @Dao

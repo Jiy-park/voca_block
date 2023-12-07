@@ -1,6 +1,7 @@
 
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
@@ -10,10 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common_ui.label_slider.LabelSlider
 import java.util.Locale
 
 
@@ -62,4 +65,19 @@ fun TTS(
 fun T(
     modifier: Modifier = Modifier
 ){
+    var value by remember { mutableStateOf(0F) }
+    val valueRange = 100F..500000F
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier.fillMaxSize()
+    ) {
+        LabelSlider(
+            value = value,
+            valueRange = valueRange,
+            onValueChange = { value = it },
+        )
+    }
 }
+

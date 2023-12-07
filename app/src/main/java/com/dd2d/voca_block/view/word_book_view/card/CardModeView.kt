@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,15 +21,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.dd2d.voca_block.TTS
 import com.dd2d.voca_block.Values
-import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.Values.WordMode.Card.SwipeTo
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
 import com.dd2d.voca_block.struct.WordBookAutoOption
 import com.dd2d.voca_block.struct.WordCategory
-import com.dd2d.voca_block.view.word_book_view.TTS
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,11 +35,10 @@ import kotlinx.coroutines.launch
 fun CardModeView(
     modifier: Modifier = Modifier,
     tts: TTS.Instance,
-    list: List<Word>,
-    fontSize: FontSize,
+    autoOption: WordBookAutoOption,
+    wordList: List<Word>,
     categoryList: List<Category>,
     wordCategoryList: List<WordCategory>,
-    autoOption: WordBookAutoOption,
 //    autoScrollMode: Boolean,
 //    autoScrollDelay: Long,
 //    autoSpeechWordMode: Boolean,
@@ -52,29 +48,26 @@ fun CardModeView(
 ){
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
-    val size = list.size
 
-    LaunchedEffect(key1 = autoOption.autoScroll, key2 = autoOption.autoScrollDelay){
-        while(autoOption.autoScroll){
-            delay(autoOption.autoScrollDelay)
-            pagerState.animateScrollToPage(pagerState.currentPage + 1)
-        }
-    }
-
-    LaunchedEffect(key1 = pagerState.currentPage){
-        if(autoOption.autoWordSpeak) {
-            tts.speakWord(list[pagerState.currentPage].word){
-                if(autoOption.autoMeanSpeak) tts.speakMean(list[pagerState.currentPage].mean){
-
-                }
-            }
-        }
-//        delay(autoScrollDelay/2)
-
-    }
+//    LaunchedEffect(key1 = autoOption.autoScroll, key2 = autoOption.autoScrollDelay){
+//        while(autoOption.autoScroll){
+//            delay(autoOption.autoScrollDelay)
+//            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+//        }
+//    }
+//
+//    LaunchedEffect(key1 = pagerState.currentPage){
+//        if(autoOption.autoWordSpeak) {
+//            tts.speakWord(wordList[pagerState.currentPage].word){
+//                if(autoOption.autoMeanSpeak) tts.speakMean(wordList[pagerState.currentPage].mean){
+//
+//                }
+//            }
+//        }
+//    }
 
     HorizontalPager(
-        pageCount = size,
+        pageCount = wordList.size,
         state = pagerState,
         pageSpacing = 30.dp,
         contentPadding = PaddingValues(horizontal = 50.dp),
@@ -82,10 +75,9 @@ fun CardModeView(
             .fillMaxWidth()
             .height(Values.WordMode.Card.CardMaxHeight.dp)
     ) { page->
-        val word = list[page]
+        val word = wordList[page]
         var swipePos by remember { mutableStateOf(0F) }
         var isOpenCategorySelector by remember { mutableStateOf(false) }
-
         Box(
             contentAlignment = Alignment.Center,
             modifier = modifier
@@ -102,8 +94,7 @@ fun CardModeView(
                 pagerState = pagerState,
                 page = page,
                 swipePos = swipePos,
-                fontSize = fontSize,
-                totalPage = list.size,
+                totalPage = wordList.size,
                 openCategorySelector = { isOpenCategorySelector = !isOpenCategorySelector },
                 onChangeMemorize = { w,b-> onChangeMemorize(w, b) },
                 onSwipeFinished = { swipe->

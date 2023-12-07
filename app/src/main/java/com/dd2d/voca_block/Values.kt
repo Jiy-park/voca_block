@@ -1,5 +1,6 @@
 package com.dd2d.voca_block
 
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.dd2d.voca_block.Values.CategorySelectorValue.AllWord
@@ -8,9 +9,11 @@ import com.dd2d.voca_block.Values.CategorySelectorValue.NotMemorizedWord
 import com.dd2d.voca_block.Values.Common.DatabaseName
 import com.dd2d.voca_block.Values.Common.Day
 import com.dd2d.voca_block.Values.Common.DefaultAutoScrollDelay
+import com.dd2d.voca_block.Values.Common.DefaultAutoScrollDelayRange
 import com.dd2d.voca_block.Values.Common.DetailType
 import com.dd2d.voca_block.Values.Common.DetailType.En
 import com.dd2d.voca_block.Values.Common.DetailType.Kr
+import com.dd2d.voca_block.Values.Common.DoubleBackPressInterval
 import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.Values.Common.FontSize.Default
 import com.dd2d.voca_block.Values.Common.FontSize.Large
@@ -28,11 +31,21 @@ import com.dd2d.voca_block.Values.Common.PreferenceValue.MotivationWord
 import com.dd2d.voca_block.Values.Common.PreferenceValue.PrefName
 import com.dd2d.voca_block.Values.Common.WordType
 import com.dd2d.voca_block.Values.Common.WordType.EnKr
+import com.dd2d.voca_block.Values.Main.AppState.Intro
+import com.dd2d.voca_block.Values.Main.AppState.Main
+import com.dd2d.voca_block.struct.WordBookAutoOption
 import com.dd2d.voca_block.view_model.WordsViewModel
 
 
 object Values {
     object Main{
+        /** 앱의 연재 상태.
+         * @property[Intro] 인트로 진행 중.
+         * @property[Main] 인트로 종료 후, 메인 진행 중*/
+        enum class AppState{
+           Intro, Main,
+        }
+
         enum class Screen(val tabName: String){
             Intro("인트로"),
             UserProfile("내정보"),
@@ -48,17 +61,21 @@ object Values {
      * @property[DatabaseName] room 데이터베이스 이름
      * @property[MotivationWordMaxLength] 메인 화면 중간의 동기부여의 한마디 의 최대 길이
      * @property[DefaultAutoScrollDelay] [WordBookAutoOption] 의 autoScrollDelay 기본값
+     * @property[DefaultAutoScrollDelayRange] WordBook 자동 스크롤 딜레이 설정 범위.
+     * @property[DoubleBackPressInterval] 뒤로가기 두번 눌러 종료에 사용되는 시간 간격
      * @property[PreferenceValue] Preference 용
      * @property[WordType] 단어의 종류, [WordType], [DetailType] 참조
      * @property[FontSize] 앱 전반적인 폰트 사이즈
      * @property[Month] 캘린더에 사용되는 월 변수
      * @property[Day] 캘린더에 사용되는 요일 변수*/
     object Common{
-        const val IntroDuration = 0L
+        const val IntroDuration = 1110L
         const val DatabaseName = "voca_block"
         const val MotivationWordMaxLength = 20
         const val CategoryNameMaxLength = 20
         const val DefaultAutoScrollDelay = 1500L
+        val DefaultAutoScrollDelayRange = 500F..3000F
+        const val DoubleBackPressInterval = 400L
 
         /** @property[PrefName] = "pref"
          * @property[MotivationWord] = "motivation"
@@ -86,16 +103,22 @@ object Values {
         }
 
         /**
+         * @property[Unspecified] TextUnit.Unspecified
          * @property[Smallest] 10.sp
          * @property[Small] 13.sp
          * @property[Default] 18.sp
          * @property[Large] 20.sp
          * @property[Largest] 25.sp
-         * @property[Unspecified] TextUnit.Unspecified
          * */
-        enum class FontSize(val size: TextUnit){
-            Smallest(10.sp), Small(13.sp), Default(18.sp), Large(20.sp), Largest(25.sp), Unspecified(TextUnit.Unspecified)
+        enum class FontSize(val toKor: String, val size: TextUnit){
+            Unspecified("적용형", TextUnit.Unspecified),
+            Smallest("매우 작음", 10.sp),
+            Small("작음", 13.sp),
+            Default("보통", 18.sp),
+            Large("큼", 20.sp),
+            Largest("매우 큼", 25.sp),
         }
+        val LocalFontSize = compositionLocalOf { Default }
 
         /** @property[Temp] 각 ordinal 을 월에 맞추기 위해 있음. 사용X*/
         enum class Month(val toKor: String) {
@@ -134,11 +157,15 @@ object Values {
         object Custom: WordFilter()
     }
 
-    sealed class WordMode{
-        object List: WordMode(){
+    val WordModeValues = listOf(WordMode.List, WordMode.Card)
 
+    sealed class WordMode(val toKor: String){
+
+        object List: WordMode("목록형"){
+            const val a = ""
         }
-        object Card: WordMode(){
+
+        object Card: WordMode("카드형"){
             sealed class SwipeTo{
                 object Up: SwipeTo()
                 object None: SwipeTo()

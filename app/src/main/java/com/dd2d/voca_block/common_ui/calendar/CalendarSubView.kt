@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.calendar
+package com.dd2d.voca_block.common_ui.calendar
 
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.background

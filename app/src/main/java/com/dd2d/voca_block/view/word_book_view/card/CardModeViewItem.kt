@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import com.dd2d.voca_block.Values.Common.FontSize
+import com.dd2d.voca_block.Values.Common.LocalFontSize
 import com.dd2d.voca_block.Values.WordMode.Card
 import com.dd2d.voca_block.Values.WordMode.Card.SwipeTo
 import com.dd2d.voca_block.common_ui.BookmarkIcon
@@ -116,7 +117,6 @@ fun ForegroundView(
     pagerState: PagerState,
     page: Int,
     swipePos: Float,
-    fontSize: FontSize,
     totalPage: Int,
     openCategorySelector: () -> Unit,
     onChangeMemorize: (word: Word, isMemorized: Boolean) -> Unit,
@@ -160,12 +160,12 @@ fun ForegroundView(
         ) {
             TT(
                 text = word.word,
-                fontSize = fontSize,
+                fontSize = LocalFontSize.current,
             )
             Spacer(modifier = modifier.height(3.dp))
             TT(
                 text = word.mean,
-                fontSize = fontSize,
+                fontSize = LocalFontSize.current,
             )
         }
         WordOrderView(order = "${page + 1}/$totalPage", modifier = modifier.align(Alignment.BottomEnd))

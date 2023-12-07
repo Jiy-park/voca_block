@@ -30,17 +30,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.Values
+import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.Values.Common.MotivationWordMaxLength
 import com.dd2d.voca_block.Values.Common.PreferenceValue.DefaultMotivationWord
-import com.dd2d.voca_block.Values.Main.Screen
+import com.dd2d.voca_block.Values.Main.AppState
 import com.dd2d.voca_block.common_ui.TT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainViewTopPanel(
     modifier: Modifier = Modifier,
-    currentTab: String,
+    appState: AppState,
     motivationWord: String,
     onChangeMotivationWord: (after: String)->Unit,
 ){
@@ -50,7 +50,7 @@ fun MainViewTopPanel(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxWidth()
-            .height(if (currentTab == Screen.Intro.name) 0.dp else 50.dp)
+            .height(if(appState == AppState.Intro) 0.dp else 50.dp)
     ) {
         AnimatedVisibility(
             visible = onEdit,
@@ -93,7 +93,7 @@ fun MainViewTopPanel(
         ) {
             TT(
                 text = if(motivationWord.isEmpty()) DefaultMotivationWord else "\"$motivationWord\"",
-                fontSize = Values.Common.FontSize.Unspecified,
+                fontSize = FontSize.Unspecified,
                 modifier = modifier
                     .fillMaxWidth()
                     .clickable(
