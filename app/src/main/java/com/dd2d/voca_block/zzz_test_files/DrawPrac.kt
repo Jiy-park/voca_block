@@ -1,6 +1,4 @@
-@file:OptIn(ExperimentalTextApi::class)
-
-package com.dd2d.voca_block.테스트파일_폴더
+package com.dd2d.voca_block.zzz_test_files
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +12,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dd2d.voca_block.common.SS
