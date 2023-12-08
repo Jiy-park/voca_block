@@ -22,12 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dd2d.voca_block.TTS
-import com.dd2d.voca_block.Values
-import com.dd2d.voca_block.Values.WordMode.Card.SwipeTo
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
 import com.dd2d.voca_block.struct.WordBookAutoOption
 import com.dd2d.voca_block.struct.WordCategory
+import com.dd2d.voca_block.view.word_book_view.WordMode
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -73,7 +72,7 @@ fun CardModeView(
         contentPadding = PaddingValues(horizontal = 50.dp),
         modifier = modifier
             .fillMaxWidth()
-            .height(Values.WordMode.Card.CardMaxHeight.dp)
+            .height(WordMode.Card.CardMaxHeight.dp)
     ) { page->
         val word = wordList[page]
         var swipePos by remember { mutableStateOf(0F) }
@@ -99,14 +98,14 @@ fun CardModeView(
                 onChangeMemorize = { w,b-> onChangeMemorize(w, b) },
                 onSwipeFinished = { swipe->
                     when(swipe){
-                        SwipeTo.Up -> {
+                        WordMode.Card.SwipeTo.Up -> {
                             onChangeMemorize(word, true)
                             if(pagerState.canScrollForward){
                                 scope.launch { pagerState.animateScrollToPage(page+1) }
                             }
                         }
-                        SwipeTo.None -> {  }
-                        SwipeTo.Down -> { }
+                        WordMode.Card.SwipeTo.None -> {  }
+                        WordMode.Card.SwipeTo.Down -> { }
                     }
                 }
             ){ delta-> swipePos += delta * 1.3F }

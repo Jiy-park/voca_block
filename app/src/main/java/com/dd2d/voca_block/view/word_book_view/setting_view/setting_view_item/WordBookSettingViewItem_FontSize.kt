@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_book_view.setting_view_item
+package com.dd2d.voca_block.view.word_book_view.setting_view.setting_view_item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dd2d.voca_block.R
-import com.dd2d.voca_block.Values.Common.FontSize
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.FontSize
+import com.dd2d.voca_block.common.TT
 
 @Composable
 fun WordBookSettingViewItem_FontSize(

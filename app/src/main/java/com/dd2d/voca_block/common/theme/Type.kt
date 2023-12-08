@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.common_ui.theme
+package com.dd2d.voca_block.common.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

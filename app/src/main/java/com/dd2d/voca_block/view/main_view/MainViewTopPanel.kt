@@ -30,11 +30,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.Values.Common.FontSize
-import com.dd2d.voca_block.Values.Common.MotivationWordMaxLength
-import com.dd2d.voca_block.Values.Common.PreferenceValue.DefaultMotivationWord
-import com.dd2d.voca_block.Values.Main.AppState
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.Common.DefaultMotivationWord
+import com.dd2d.voca_block.common.Common.MotivationWordMaxLength
+import com.dd2d.voca_block.common.AppState
+import com.dd2d.voca_block.common.FontSize
+import com.dd2d.voca_block.common.TT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -43,15 +43,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
-import com.dd2d.voca_block.Values.Common.FontSize
-import com.dd2d.voca_block.Values.Common.LocalFontSize
-import com.dd2d.voca_block.Values.WordMode.Card
-import com.dd2d.voca_block.Values.WordMode.Card.SwipeTo
-import com.dd2d.voca_block.common_ui.BookmarkIcon
-import com.dd2d.voca_block.common_ui.MemorizeIcon
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.BookmarkIcon
+import com.dd2d.voca_block.common.FontSize
+import com.dd2d.voca_block.common.LocalFontSize
+import com.dd2d.voca_block.common.MemorizeIcon
+import com.dd2d.voca_block.common.TT
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
+import com.dd2d.voca_block.view.word_book_view.WordMode
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
@@ -70,8 +69,8 @@ fun CategorySelector(
     Column(
         horizontalAlignment = Alignment.End,
         modifier = modifier
-            .width(Card.CardMaxWidth.dp)
-            .height(Card.CardMaxHeight.dp)
+            .width(WordMode.Card.CardMaxWidth.dp)
+            .height(WordMode.Card.CardMaxHeight.dp)
             .background(color = Color.White)
             .padding(5.dp)
     ){
@@ -120,29 +119,29 @@ fun ForegroundView(
     totalPage: Int,
     openCategorySelector: () -> Unit,
     onChangeMemorize: (word: Word, isMemorized: Boolean) -> Unit,
-    onSwipeFinished: (swipe: SwipeTo)->Unit,
+    onSwipeFinished: (swipe: WordMode.Card.SwipeTo)->Unit,
     onSwipe: (delta: Float) -> Unit
 ){
     val animatedColor by animateColorAsState(targetValue = if (swipePos < -150F) Color.Green else Color.White, label = "")
     val currentPage = pagerState.currentPage
     val pageOffset = ((currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
     val height = lerp(
-        start = Card.CardMinHeight.dp,
-        stop = Card.CardMaxHeight.dp,
+        start = WordMode.Card.CardMinHeight.dp,
+        stop = WordMode.Card.CardMaxHeight.dp,
         fraction = 1f - pageOffset.coerceIn(0f, 1f)
     )
     Box(
         modifier = modifier
-            .offset(x = 0.dp, y = swipePos.coerceIn(Card.VerticalSwipeRange).dp)
-            .width(Card.CardMaxWidth.dp)
+            .offset(x = 0.dp, y = swipePos.coerceIn(WordMode.Card.VerticalSwipeRange).dp)
+            .width(WordMode.Card.CardMaxWidth.dp)
             .height(height)
             .background(color = animatedColor)
             .shadow(elevation = 2.5.dp,)
             .draggable(
                 onDragStopped = {
                     when {
-                        swipePos < Card.UpperSwipeTrigger -> onSwipeFinished(SwipeTo.Up)
-                        swipePos > Card.LowerSwipeTrigger -> onSwipeFinished(SwipeTo.Down)
+                        swipePos < WordMode.Card.UpperSwipeTrigger -> onSwipeFinished(WordMode.Card.SwipeTo.Up)
+                        swipePos > WordMode.Card.LowerSwipeTrigger -> onSwipeFinished(WordMode.Card.SwipeTo.Down)
                     }
                 },
                 state = rememberDraggableState { delta -> onSwipe(delta) },

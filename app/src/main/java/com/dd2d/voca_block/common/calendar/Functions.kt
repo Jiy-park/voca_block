@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.common_ui.calendar
+package com.dd2d.voca_block.common.calendar
 
 import java.time.LocalDate
 

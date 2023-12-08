@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.dd2d.voca_block.Values.Main.AppState
-import com.dd2d.voca_block.Values.Main.Screen
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.AppState
+import com.dd2d.voca_block.common.Screen
+import com.dd2d.voca_block.common.TT
 
 @Composable
 fun MainViewBottomPanel(

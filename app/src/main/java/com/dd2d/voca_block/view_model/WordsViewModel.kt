@@ -6,12 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dd2d.voca_block.Values.CategorySelectorValue
-import com.dd2d.voca_block.Values.CategorySelectorValue.AllWord
-import com.dd2d.voca_block.Values.CategorySelectorValue.MemorizedWord
-import com.dd2d.voca_block.Values.CategorySelectorValue.NotMemorizedWord
 import com.dd2d.voca_block.model.WordsModel
 import com.dd2d.voca_block.struct.Word
+import com.dd2d.voca_block.view.word_book_view.category_selector.CategorySelectorValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -42,9 +39,9 @@ class WordsViewModel(private val wordsModel: WordsModel): ViewModel(){
      * @see [CategorySelectorValue]*/
     fun selectByCategoryId(categoryId: Int){
         when(categoryId){
-            AllWord.id -> { getAllWord() }
-            MemorizedWord.id -> { getAllByMemorize(true) }
-            NotMemorizedWord.id -> { getAllByMemorize(false) }
+            CategorySelectorValue.AllWord.id -> { getAllWord() }
+            CategorySelectorValue.MemorizedWord.id -> { getAllByMemorize(true) }
+            CategorySelectorValue.NotMemorizedWord.id -> { getAllByMemorize(false) }
             else -> { getAllByCategoryId(categoryId) }
         }
     }

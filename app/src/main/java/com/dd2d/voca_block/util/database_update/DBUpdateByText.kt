@@ -1,8 +1,8 @@
 package com.dd2d.voca_block.util.database_update
 
 import android.content.Context
-import com.dd2d.voca_block.Values.Common.WordType
 import com.dd2d.voca_block.DB
+import com.dd2d.voca_block.common.WordType
 import com.dd2d.voca_block.struct.Word
 import com.dd2d.voca_block.util.log
 import kotlinx.coroutines.Dispatchers

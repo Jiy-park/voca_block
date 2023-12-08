@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_book_view.setting_view_item
+package com.dd2d.voca_block.view.word_book_view.setting_view.setting_view_item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -18,18 +18,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.Values
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.TT
+import com.dd2d.voca_block.util.log
+import com.dd2d.voca_block.view.word_book_view.WordMode
+import com.dd2d.voca_block.view.word_book_view.WordModeValues
 import kotlin.math.abs
 
 @Composable
 fun WordBookSettingViewItem_WordMode(
     modifier: Modifier = Modifier,
-    wordMode: Values.WordMode,
-    onChangeWordMode: (mode: Values.WordMode)->Unit,
+    wordMode: WordMode,
+    onChangeWordMode: (mode: WordMode)->Unit,
 ){
-    val indexOfCurrentWordMode = Values.WordModeValues.indexOf(wordMode)
-    val modeCount = Values.WordModeValues.size
+    val indexOfCurrentWordMode = WordModeValues.indexOf(wordMode)
+    val modeCount = WordModeValues.size
+    WordModeValues.forEach {
+        it?.toKor.log("sas")
+    }
+    indexOfCurrentWordMode.log("index")
+    modeCount.log("count")
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -57,7 +64,7 @@ fun WordBookSettingViewItem_WordMode(
             IconButton(
                 onClick = {
                     val prev = abs(indexOfCurrentWordMode - 1) % modeCount
-                    onChangeWordMode(Values.WordModeValues[prev])
+                    onChangeWordMode(WordModeValues[prev])
                 }
             ) {
                 Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "")
@@ -66,7 +73,8 @@ fun WordBookSettingViewItem_WordMode(
             IconButton(
                 onClick = {
                     val next = (indexOfCurrentWordMode + 1) % modeCount
-                    onChangeWordMode(Values.WordModeValues[next])
+                    next.log()
+                    onChangeWordMode(WordModeValues[next])
                 }
             ) {
                 Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "")

@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_book_view.setting_view_item
+package com.dd2d.voca_block.view.word_book_view.setting_view.setting_view_item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.TT
 import com.dd2d.voca_block.struct.WordBookAutoOption
 
 @Composable

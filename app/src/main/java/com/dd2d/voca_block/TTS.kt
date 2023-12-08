@@ -2,6 +2,8 @@ package com.dd2d.voca_block
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
+import com.dd2d.voca_block.common.DetailType
+import com.dd2d.voca_block.common.WordType
 import java.util.Locale
 
 class TTS{
@@ -27,21 +29,21 @@ class TTS{
         private var wordInstance: TextToSpeech? = null
         private var meanInstance: TextToSpeech? = null
 
-        fun getInstance(context: Context, wordType: Values.Common.WordType): Instance{
+        fun getInstance(context: Context, wordType: WordType): Instance{
             if(wordInstance != null && meanInstance != null) return Instance(wordInstance!!, meanInstance!!)
             else{
                 val (typeWord, typeMean) = wordType.type
                 wordInstance = TextToSpeech(context){
                     wordInstance?.language = when(typeWord){
-                        Values.Common.DetailType.En -> { Locale.US }
-                        Values.Common.DetailType.Kr -> { Locale.KOREA }
+                        DetailType.En -> { Locale.US }
+                        DetailType.Kr -> { Locale.KOREA }
                     }
                 }
 
                 meanInstance = TextToSpeech(context){
                     meanInstance?.language = when(typeMean){
-                        Values.Common.DetailType.En -> { Locale.US }
-                        Values.Common.DetailType.Kr -> { Locale.KOREA }
+                        DetailType.En -> { Locale.US }
+                        DetailType.Kr -> { Locale.KOREA }
                     }
                 }
 

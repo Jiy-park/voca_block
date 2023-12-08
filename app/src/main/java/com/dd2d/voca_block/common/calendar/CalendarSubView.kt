@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.common_ui.calendar
+package com.dd2d.voca_block.common.calendar
 
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.background
@@ -24,8 +24,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.common_ui.TT
-import com.dd2d.voca_block.Values
+import com.dd2d.voca_block.common.TT
 import java.time.LocalDate
 
 @Composable
@@ -47,7 +46,7 @@ fun BarOfYearMonth(
         IconButton(
             onClick = { onClickPrev(LocalDate.of(year, month, day).minusMonths(1)) }
         ) { Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "preview month") }
-        TT(text = "${Values.Common.Month.values()[month]}, $year")
+        TT(text = "${Calendar.Month.values()[month]}, $year")
         IconButton(
             onClick = { onClickNext(LocalDate.of(year, month, day).plusMonths(1)) }
         ) { Icon(imageVector = Icons.Default.ArrowForward, contentDescription = "next month") }
@@ -62,7 +61,7 @@ fun BarOfWeek(modifier: Modifier = Modifier){
             .wrapContentHeight()
             .background(color = Color.White)
     ) {
-        Values.Common.Day.values().forEachIndexed { i, day->
+        Calendar.Day.values().forEachIndexed { i, day->
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = modifier

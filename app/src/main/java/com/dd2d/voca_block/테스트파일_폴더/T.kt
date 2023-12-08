@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.dd2d.voca_block.common_ui.TT
-import com.dd2d.voca_block.common_ui.label_slider.LabelSlider
+import com.dd2d.voca_block.common.LabelSlider
+import com.dd2d.voca_block.common.TT
 import java.util.Locale
 
 

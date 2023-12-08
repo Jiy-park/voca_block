@@ -13,9 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.dd2d.voca_block.common.Common.IntroDuration
 import com.dd2d.voca_block.R
-import com.dd2d.voca_block.Values
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.TT
 import kotlinx.coroutines.delay
 
 @Composable
@@ -36,7 +36,7 @@ fun IntroView(
         TT(text = stringResource(id = R.string.app_name), color = Color.White)
     }
     LaunchedEffect(Unit){
-        delay(Values.Common.IntroDuration)
+        delay(IntroDuration)
         onComplete()
     }
 }

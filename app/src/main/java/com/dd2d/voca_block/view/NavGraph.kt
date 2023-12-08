@@ -3,9 +3,9 @@ package com.dd2d.voca_block.view
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.dd2d.voca_block.Values.Main.Screen
-import com.dd2d.voca_block.view.memory_book_view.MemoryBookView
+import com.dd2d.voca_block.common.Screen
 import com.dd2d.voca_block.view.setting_view.SettingView
+import com.dd2d.voca_block.view.test_book_view.TestBookView
 import com.dd2d.voca_block.view.user_profile_view.UserProfileView
 import com.dd2d.voca_block.view.word_book_view.WordBookView
 import com.dd2d.voca_block.view_model.CategoryViewModel
@@ -24,7 +24,7 @@ fun NavGraphBuilder.mainGraph(
         )
     }
     composable(route = Screen.MemoryBook.name) {
-        MemoryBookView()
+        TestBookView()
     }
     composable(route = Screen.WordBook.name) {
         WordBookView(

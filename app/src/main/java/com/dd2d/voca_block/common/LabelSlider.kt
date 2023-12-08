@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.common_ui.label_slider
+package com.dd2d.voca_block.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.dd2d.voca_block.R
-import com.dd2d.voca_block.common_ui.TT
 
 /**
  * @param[labelSize] 라벨이 표시될 영역의 사이즈.

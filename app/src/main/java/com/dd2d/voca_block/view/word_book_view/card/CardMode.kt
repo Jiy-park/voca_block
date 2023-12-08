@@ -9,12 +9,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.dd2d.voca_block.TTS
-import com.dd2d.voca_block.Values.TestMode
-import com.dd2d.voca_block.Values.WordMode
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
 import com.dd2d.voca_block.struct.WordBookAutoOption
 import com.dd2d.voca_block.struct.WordCategory
+import com.dd2d.voca_block.view.test_book_view.TestMode
+import com.dd2d.voca_block.view.word_book_view.WordMode
 
 /**
  * @param[tts] TTS, pair.first: word 읽음. pair.second: mean 읽음*/

@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_book_view.setting_view_item
+package com.dd2d.voca_block.view.word_book_view.setting_view.setting_view_item
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.Values
-import com.dd2d.voca_block.common_ui.TT
-import com.dd2d.voca_block.common_ui.label_slider.LabelSlider
-import com.dd2d.voca_block.common_ui.label_slider.LabelSliderDefaultLabel
+import com.dd2d.voca_block.common.Common.DefaultAutoScrollDelayRange
+import com.dd2d.voca_block.common.LabelSlider
+import com.dd2d.voca_block.common.LabelSliderDefaultLabel
+import com.dd2d.voca_block.common.TT
 import com.dd2d.voca_block.struct.WordBookAutoOption
 
 @Composable
@@ -62,7 +62,7 @@ fun WordBookSettingViewItem_AutoScrollDelay(
 
         LabelSlider(
             value = autoOption.autoScrollDelay.toFloat(),
-            valueRange = Values.Common.DefaultAutoScrollDelayRange,
+            valueRange = DefaultAutoScrollDelayRange,
             onValueChange = {
                 onChangeAutoOption(autoOption.copy(autoScrollDelay = it.toLong()))
                 onDragging = true

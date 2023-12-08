@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.view.word_book_view
+package com.dd2d.voca_block.view.word_book_view.category_selector
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -33,9 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.Values
-import com.dd2d.voca_block.Values.CategorySelectorValue
-import com.dd2d.voca_block.common_ui.TT
+import com.dd2d.voca_block.common.FontSize
+import com.dd2d.voca_block.common.TT
 import com.dd2d.voca_block.struct.Category
 
 
@@ -107,6 +106,7 @@ fun CategorySelectorViewItem(
     onEditMode: Boolean,
     onChangeEditMode: (()->Unit)? = null,
 ){
+
     val editModeHeight by animateFloatAsState(
         targetValue = if(onEditMode) 300F else 0F,
         label = ""
@@ -123,8 +123,8 @@ fun CategorySelectorViewItem(
                 Column(
                     modifier = modifier.wrapContentWidth()
                 ) {
-                    TT(text = item.name, textAlign = TextAlign.Left, fontSize = Values.Common.FontSize.Default)
-                    TT(text = item.description, textAlign = TextAlign.Left, fontSize = Values.Common.FontSize.Smallest)
+                    TT(text = item.name, textAlign = TextAlign.Left, fontSize = FontSize.Default)
+                    TT(text = item.description, textAlign = TextAlign.Left, fontSize = FontSize.Smallest)
                 }
                 if(use){
                     IconButton(onClick = { onChangeEditMode!!() }) {
@@ -162,8 +162,8 @@ fun CategorySelectorViewItem(
             Column(
                 modifier = modifier.wrapContentWidth()
             ) {
-                TT(text = item.name, textAlign = TextAlign.Left, fontSize = Values.Common.FontSize.Default)
-                TT(text = item.description, textAlign = TextAlign.Left, fontSize = Values.Common.FontSize.Smallest)
+                TT(text = item.name, textAlign = TextAlign.Left, fontSize = FontSize.Default)
+                TT(text = item.description, textAlign = TextAlign.Left, fontSize = FontSize.Smallest)
             }
         }
     }

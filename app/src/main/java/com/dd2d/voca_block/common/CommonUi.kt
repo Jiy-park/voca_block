@@ -1,4 +1,4 @@
-package com.dd2d.voca_block.common_ui
+package com.dd2d.voca_block.common
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -26,7 +26,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.dd2d.voca_block.R
-import com.dd2d.voca_block.Values.Common.FontSize
 import com.dd2d.voca_block.struct.Word
 
 @Composable
