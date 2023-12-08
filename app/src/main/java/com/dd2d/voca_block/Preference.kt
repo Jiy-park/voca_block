@@ -10,34 +10,32 @@ import com.dd2d.voca_block.view.word_book_view.WordModeValues
 class Preference(context: Context){
     private val pref = context.getSharedPreferences(PrefName, Context.MODE_PRIVATE)
 
+    fun getMotivationWord() = pref.getString(MotivationWord, "")
     fun setMotivationWord(motivation: String){
         val edit = pref.edit()
         edit.putString(MotivationWord, motivation)
         edit.apply()
     }
 
-
-    fun getMotivationWord() = pref.getString(MotivationWord, "")?: ""
-
+    fun getFontSize(): FontSize{
+        val indexOfFontSize = pref.getInt(PrefFontSize, WordModeValues.indexOf(WordMode.Card))
+        return if(indexOfFontSize !in WordModeValues.indices) FontSize.Default
+                else FontSize.values()[indexOfFontSize]
+    }
     fun setFontSize(size: FontSize){
         val edit = pref.edit()
         edit.putInt(PrefFontSize, size.ordinal)
         edit.apply()
     }
 
-    fun getFontSize(): FontSize{
-        val indexOfFontSize = pref.getInt(PrefFontSize, WordModeValues.indexOf(WordMode.Card))
-        return if(indexOfFontSize == -1) FontSize.Default
-                else FontSize.values()[indexOfFontSize]
-    }
 
+    fun getWordMode() = WordModeValues[pref.getInt(PrefWordMode, 1)]
     fun setWordMode(mode: WordMode){
         val edit = pref.edit()
         edit.putInt(PrefWordMode, WordModeValues.indexOf(mode))
         edit.apply()
     }
 
-    fun getWordMode() = WordModeValues[pref.getInt(PrefWordMode, 1)]
 
     fun setAutoOption(autoOption: WordBookAutoOption){
         val (autoScroll, scrollDelay, speakWord, speakMean) = autoOption
@@ -52,8 +50,8 @@ class Preference(context: Context){
     fun getAutoOption() = WordBookAutoOption(
         autoScroll = pref.getBoolean(AutoOption_AutoScroll, false),
         autoScrollDelay = pref.getLong(AutoOption_ScrollDelay, DefaultAutoScrollDelay),
-        autoWordSpeak = pref.getBoolean(AutoOption_SpeakWord, false),
-        autoMeanSpeak = pref.getBoolean(AutoOption_SpeakMean, false),
+        autoSpeakWord = pref.getBoolean(AutoOption_SpeakWord, false),
+        autoSpeakMean = pref.getBoolean(AutoOption_SpeakMean, false),
     )
 
     /** @property[PrefName] Preference 이름.

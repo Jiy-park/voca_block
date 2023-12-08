@@ -2,7 +2,6 @@ package com.dd2d.voca_block.util.database_update
 
 import android.content.Context
 import android.util.Log
-import com.dd2d.voca_block.util.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
@@ -48,16 +47,12 @@ suspend fun readFile(context: Context){
         val reader = BufferedReader(InputStreamReader(inStream))
         withContext(Dispatchers.IO){
             while(true){
-                reader.readLine()?.let { line->
-                    line.split("\t").dropLast(1).log()
-//                    TODO("word id 구조랑 word_table 구조 다시 생각해보기." +
-//                            "테이블 안에 단어 타입(영단어인지 중단어인지 일단어인지) 판단하는게 나을 거 같은데")
-                }?: break
+                reader.readLine()?.split("\t")?.dropLast(1) ?: break
             }
         }
     }
     catch (e: IOException){
-        e.log("error")
+        Log.e("LOG_CHECK", " :: readFile() -> $e")
     }
 }
 

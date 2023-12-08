@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,49 +22,68 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.dd2d.voca_block.SpeakTarget
 import com.dd2d.voca_block.TTS
+import com.dd2d.voca_block.TTSState
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.Word
 import com.dd2d.voca_block.struct.WordBookAutoOption
 import com.dd2d.voca_block.struct.WordCategory
 import com.dd2d.voca_block.view.word_book_view.WordMode
+import com.dd2d.voca_block.view.word_book_view.WordType
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CardModeView(
     modifier: Modifier = Modifier,
-    tts: TTS.Instance,
+    tts: TTS,
     autoOption: WordBookAutoOption,
     wordList: List<Word>,
     categoryList: List<Category>,
     wordCategoryList: List<WordCategory>,
-//    autoScrollMode: Boolean,
-//    autoScrollDelay: Long,
-//    autoSpeechWordMode: Boolean,
-//    autoSpeechMeanMode: Boolean,
     onUpdateWordCategory: (wordId: Int, categoryId: Int, onCategory: Boolean)->Unit,
     onChangeMemorize: (word: Word, isMemorized: Boolean)->Unit,
 ){
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
+    var moveTrigger by remember { mutableStateOf(false) }
+    
+    if(autoOption.autoScroll and wordList.isNotEmpty()){
+        val word = wordList[pagerState.currentPage]
+        LaunchedEffect(moveTrigger){
+            while(autoOption.autoScroll){
+                var isBeforeSpeakWord = autoOption.autoSpeakWord
+                var isBeforeSpeakMean = autoOption.autoSpeakMean
 
-//    LaunchedEffect(key1 = autoOption.autoScroll, key2 = autoOption.autoScrollDelay){
-//        while(autoOption.autoScroll){
-//            delay(autoOption.autoScrollDelay)
-//            pagerState.animateScrollToPage(pagerState.currentPage + 1)
-//        }
-//    }
-//
-//    LaunchedEffect(key1 = pagerState.currentPage){
-//        if(autoOption.autoWordSpeak) {
-//            tts.speakWord(wordList[pagerState.currentPage].word){
-//                if(autoOption.autoMeanSpeak) tts.speakMean(wordList[pagerState.currentPage].mean){
-//
-//                }
-//            }
-//        }
-//    }
+                    tts.ttsState.collect{ state->
+                        when(state){
+                            TTSState.OnReady -> {
+                                if(isBeforeSpeakWord){
+                                    val detailType = WordType.values()[word.wordType].type.wordType
+                                    tts.speak(text = word.word, detailType = detailType, speakTarget = SpeakTarget.Word)
+                                }
+                                else if(isBeforeSpeakMean){
+                                    val detailType = WordType.values()[word.wordType].type.meanType
+                                    tts.speak(text = word.mean, detailType = detailType, speakTarget = SpeakTarget.Mean)
+                                }
+                                else{
+                                    delay(autoOption.autoScrollDelay)
+                                    if(pagerState.canScrollForward){
+                                        pagerState.animateScrollToPage(pagerState.currentPage+1)
+                                        moveTrigger = !moveTrigger
+                                    }
+                                }
+                            }
+                            TTSState.OnSpeakWord -> { isBeforeSpeakWord = false }
+                            TTSState.OnSpeakMean -> { isBeforeSpeakMean = false }
+                        }
+                }
+
+            }
+        }
+    }
 
     HorizontalPager(
         pageCount = wordList.size,

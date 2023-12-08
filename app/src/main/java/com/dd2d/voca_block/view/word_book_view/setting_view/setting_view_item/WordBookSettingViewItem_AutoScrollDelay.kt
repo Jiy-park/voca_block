@@ -70,7 +70,7 @@ fun WordBookSettingViewItem_AutoScrollDelay(
             onValueChangeFinished = { onDragging = false },
             visible = autoOption.autoScroll,
             sliderColor = sliderColor,
-            enable = !(autoOption.autoWordSpeak or autoOption.autoMeanSpeak),
+//            enable = !(autoOption.autoWordSpeak or autoOption.autoMeanSpeak),
             label = {
                 AnimatedVisibility(visible = onDragging, enter = fadeIn(), exit = fadeOut()) {
                     val delayToSec = autoOption.autoScrollDelay.toFloat()/1000

@@ -19,7 +19,6 @@ import com.dd2d.voca_block.view_model.WordsViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val pref = Preference(baseContext)
         val db = DB.getInstance(baseContext)
         val wordsViewModel = WordsViewModel(WordsModel(db))
         val categoryViewModel = CategoryViewModel(CategoryModel(db))
@@ -36,7 +35,6 @@ class MainActivity : ComponentActivity() {
                         wordsViewModel = wordsViewModel,
                         categoryViewModel = categoryViewModel,
                         wordCategoryViewModel = wordCategoryViewModel,
-                        pref = pref
                     )
                 }
             }

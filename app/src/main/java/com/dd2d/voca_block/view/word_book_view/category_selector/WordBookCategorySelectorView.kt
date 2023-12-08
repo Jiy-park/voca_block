@@ -138,7 +138,7 @@ fun CategorySelectorViewItem(
                     .height(editModeHeight.dp)
                     .background(color = Color.White)
             ){
-                TT(text = "asdas")
+                TT(text = "CategorySelectorViewItem")
             }
         }
     }

@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.dd2d.voca_block.common.TT
-import com.dd2d.voca_block.util.log
 import com.dd2d.voca_block.view.word_book_view.WordMode
 import com.dd2d.voca_block.view.word_book_view.WordModeValues
 import kotlin.math.abs
@@ -32,11 +31,6 @@ fun WordBookSettingViewItem_WordMode(
 ){
     val indexOfCurrentWordMode = WordModeValues.indexOf(wordMode)
     val modeCount = WordModeValues.size
-    WordModeValues.forEach {
-        it?.toKor.log("sas")
-    }
-    indexOfCurrentWordMode.log("index")
-    modeCount.log("count")
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -73,7 +67,6 @@ fun WordBookSettingViewItem_WordMode(
             IconButton(
                 onClick = {
                     val next = (indexOfCurrentWordMode + 1) % modeCount
-                    next.log()
                     onChangeWordMode(WordModeValues[next])
                 }
             ) {

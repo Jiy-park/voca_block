@@ -1,12 +1,7 @@
 package com.dd2d.voca_block.zzz_test_files
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -14,8 +9,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dd2d.voca_block.common.SS
-import com.dd2d.voca_block.util.log
 import kotlin.random.Random
 
 @Composable
@@ -39,78 +32,11 @@ fun DrawPractice(
 
 }
 
-
-@Composable
-fun ColorSlider(
-    color: Color,
-    onColorChange: (res: Color)->Unit,
-    modifier: Modifier = Modifier
-){
-    color.log("color")
-    val colors = listOf(color.alpha, color.red, color.green, color.blue)
-    val names = listOf("alpha", "red", "green", "blue")
-    Column(
-        modifier = modifier
-    ) {
-//        colors.forEachIndexed { i, v ->
-//            SS(
-//                text = names[i],
-//                range = 0F..1F,
-//                value = v,
-//                onValueChange = { new->
-//                    val newColor = when(i){
-//                        0-> Color(new, colors[1], colors[2], colors[3])
-//                        1-> Color(colors[0], new, colors[2], colors[3])
-//                        2-> Color(colors[0], colors[1], new, colors[3])
-//                        3-> Color(colors[0], colors[1], colors[2], new)
-//                        else ->{ Color.Black }
-//                    }.log("new Color")
-//                    onColorChange(newColor)
-//                }
-//            )
-//        }
-
-        var a by remember { mutableStateOf(color.alpha) }
-        var r by remember { mutableStateOf(color.red) }
-        var g by remember { mutableStateOf(color.green) }
-        var b by remember { mutableStateOf(color.blue) }
-
-        SS(text = "alpha", range = 0F..1F, value = a,
-            onValueChange = {
-                it.log("a ")
-                a = it
-                onColorChange(Color(r, g, b, a))
-            },
-        )
-        SS(text = "R", range = 0F..1F, value = r,
-            onValueChange = {
-                it.log("r ")
-                r = it
-                onColorChange(Color(r, g, b, a))
-            }
-        )
-        SS(text = "G", range = 0F..1F, value = g,
-            onValueChange = {
-                it.log("g ")
-                g = it
-                onColorChange(Color(r, g, b, a))
-            },
-        )
-        SS(text = "B", range = 0F..1F, value = b,
-            onValueChange = {
-                it.log("b ")
-                b = it
-                onColorChange(Color(r, g, b, a))
-            },
-        )
-    }
-}
-
 @Composable
 fun PieChart(
+    modifier: Modifier = Modifier,
     data: List<Any>,
     radius: Float = 50F,
-    modifier: Modifier = Modifier
 ){
     val categories = data.distinct()
     val colors = generateRandomColorList(categories.size)
@@ -118,7 +44,7 @@ fun PieChart(
         modifier = modifier
             .drawBehind {
                 var startAngle = 270F
-                var sweepAngle = 0F
+                var sweepAngle: Float
 
                 categories.forEachIndexed { index, category->
                     val ratio = data.count { it == category }/data.size.toFloat()

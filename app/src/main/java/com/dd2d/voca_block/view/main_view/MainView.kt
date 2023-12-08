@@ -22,9 +22,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dd2d.voca_block.common.Common.DoubleBackPressInterval
 import com.dd2d.voca_block.Preference
 import com.dd2d.voca_block.common.AppState
+import com.dd2d.voca_block.common.Common.DoubleBackPressInterval
 import com.dd2d.voca_block.common.Screen
 import com.dd2d.voca_block.common.TT
 import com.dd2d.voca_block.view.intro_view.IntroView
@@ -57,12 +57,13 @@ fun MainView(
     wordsViewModel: WordsViewModel,
     categoryViewModel: CategoryViewModel,
     wordCategoryViewModel: WordCategoryViewModel,
-    pref: Preference
 ) {
     var appState by remember { mutableStateOf(AppState.Intro) }
     val navController = rememberNavController()
     val currentTab by navController.currentBackStackEntryAsState()
-    var motivationWord by remember { mutableStateOf(pref.getMotivationWord()) }
+
+    val context = LocalContext.current
+    var motivationWord by remember { mutableStateOf(Preference(context).getMotivationWord()) }
 
     DoubleBackPressToFinish()
 

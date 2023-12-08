@@ -2,7 +2,6 @@ package com.dd2d.voca_block.zzz_test_files
 
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
@@ -12,12 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.dd2d.voca_block.common.LabelSlider
 import com.dd2d.voca_block.common.TT
+import com.dd2d.voca_block.util.log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 
@@ -66,19 +68,22 @@ fun TTS(
 fun T(
     modifier: Modifier = Modifier
 ){
-    var value by remember { mutableStateOf(0F) }
-    val valueRange = 100F..500000F
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxSize()
-    ) {
-        LabelSlider(
-            value = value,
-            valueRange = valueRange,
-            onValueChange = { value = it },
-        )
-    }
 }
 
+class Q{
+    var a by mutableStateOf(false)
+    var b by mutableStateOf(false)
+
+    fun d(){
+        a = true
+        CoroutineScope(Dispatchers.Main).launch{
+            if(!b && !a){
+                log("1")
+            }
+            delay(1000L)
+            a = false
+
+
+        }
+    }
+}

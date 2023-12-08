@@ -50,9 +50,9 @@ fun WordBookSettingViewItem_AutoMeanSpeak(
                 .fillMaxWidth()
                 .weight(1F)
         ){
-            TT(text = if(autoOption.autoMeanSpeak) "ON" else "OFF")
+            TT(text = if(autoOption.autoSpeakMean) "ON" else "OFF")
             Switch(
-                checked = autoOption.autoMeanSpeak,
+                checked = autoOption.autoSpeakMean,
                 colors = SwitchDefaults.colors(
                     checkedTrackColor = Color.Black,
                     uncheckedTrackColor = Color.LightGray,
@@ -60,7 +60,7 @@ fun WordBookSettingViewItem_AutoMeanSpeak(
                     uncheckedThumbColor = Color.White
                 ),
                 onCheckedChange = {
-                    onChangeAutoOption(autoOption.copy(autoMeanSpeak = it))
+                    onChangeAutoOption(autoOption.copy(autoSpeakMean = it))
                 },
             )
         }

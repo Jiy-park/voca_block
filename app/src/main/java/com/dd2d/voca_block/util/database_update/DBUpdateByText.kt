@@ -1,10 +1,10 @@
 package com.dd2d.voca_block.util.database_update
 
 import android.content.Context
+import android.util.Log
 import com.dd2d.voca_block.DB
-import com.dd2d.voca_block.common.WordType
 import com.dd2d.voca_block.struct.Word
-import com.dd2d.voca_block.util.log
+import com.dd2d.voca_block.view.word_book_view.WordType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -45,7 +45,7 @@ suspend fun dbUpdateByText(context: Context, db: DB, wordType: WordType, callbac
         }
     }
     catch (e: IOException){
-        e.log("error in ${e.stackTrace[0].methodName}")
+        Log.e("LOG_CHECK", " :: dbUpdateByText() -> $e")
     }
 }
 //

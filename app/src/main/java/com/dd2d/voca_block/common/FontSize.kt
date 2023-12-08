@@ -26,4 +26,4 @@ enum class FontSize(val toKor: String, val size: TextUnit){
     Large("큼", 20.sp),
     Largest("매우 큼", 25.sp),
 }
-val LocalFontSize = compositionLocalOf { FontSize.Default }
+val LocalFontSize = compositionLocalOf { Default }

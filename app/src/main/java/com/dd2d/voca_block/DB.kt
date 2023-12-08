@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.dd2d.voca_block.common.Common.DatabaseName
 import com.dd2d.voca_block.DB.Companion.getInstance
-import com.dd2d.voca_block.common.WordType
+import com.dd2d.voca_block.view.word_book_view.WordType
 import com.dd2d.voca_block.struct.Category
 import com.dd2d.voca_block.struct.CategoryDao
 import com.dd2d.voca_block.struct.Word
@@ -19,7 +19,6 @@ import com.dd2d.voca_block.util.database_update.data
 import com.dd2d.voca_block.util.database_update.dbUpdateByText
 import com.dd2d.voca_block.util.database_update.readFile
 import com.dd2d.voca_block.util.database_update.writeFile
-import com.dd2d.voca_block.util.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +32,6 @@ class RoomCallback(val context: Context): RoomDatabase.Callback(){
                 readFile(context)
             }
             dbUpdateByText(context = context, db = database, wordType = WordType.EnKr){
-                it.log("end")
             }
             database.categoryDao().insert(Category(id = 0, name = "북마크", description = "북마크한 단어 목록을 불러옵니다."))
         }

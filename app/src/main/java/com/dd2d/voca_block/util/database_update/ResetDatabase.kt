@@ -5,8 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.dd2d.voca_block.DB
-import com.dd2d.voca_block.common.WordType
-import com.dd2d.voca_block.util.log
+import com.dd2d.voca_block.view.word_book_view.WordType
 
 @Composable
 @Preview()
@@ -19,7 +18,6 @@ fun ResetDatabase(){
             readFile(context)
         }
         dbUpdateByText(context = context, db = db, wordType = WordType.EnKr){
-            it.log("end")
         }
     }
 }

@@ -3,7 +3,6 @@ package com.dd2d.voca_block.model
 import android.util.Log
 import com.dd2d.voca_block.DB
 import com.dd2d.voca_block.struct.Word
-import com.dd2d.voca_block.util.log
 
 class WordsModel(db: DB){
     private val wordModel: DB
@@ -30,6 +29,8 @@ class WordsModel(db: DB){
     fun updateWord(word: Word){
         try {
             wordModel.wordDao().update(word)
-        } catch (e: Exception){ e.log("error ") }
+        } catch (e: Exception){
+            Log.e("LOG_CHECK", "WordsModel :: updateWord() -> $e")
+        }
     }
 }

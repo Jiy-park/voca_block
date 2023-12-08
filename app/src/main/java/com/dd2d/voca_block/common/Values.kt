@@ -24,7 +24,7 @@ object Common{
     const val MotivationWordMaxLength = 20
     const val CategoryNameMaxLength = 20
     const val DefaultAutoScrollDelay = 1500L
-    val DefaultAutoScrollDelayRange = 500F..3000F
+    val DefaultAutoScrollDelayRange = 1000F..3500F
     const val DoubleBackPressInterval = 400L
     const val DefaultMotivationWord = "탭해서 동기부여의 한마디를 적어봐요!"
 

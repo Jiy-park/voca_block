@@ -50,9 +50,9 @@ fun WordBookSettingViewItem_AutoWordSpeak(
                 .fillMaxWidth()
                 .weight(1F)
         ){
-            TT(text = if(autoOption.autoWordSpeak) "ON" else "OFF")
+            TT(text = if(autoOption.autoSpeakWord) "ON" else "OFF")
             Switch(
-                checked = autoOption.autoWordSpeak,
+                checked = autoOption.autoSpeakWord,
                 colors = SwitchDefaults.colors(
                     checkedTrackColor = Color.Black,
                     uncheckedTrackColor = Color.LightGray,
@@ -60,7 +60,7 @@ fun WordBookSettingViewItem_AutoWordSpeak(
                     uncheckedThumbColor = Color.White
                 ),
                 onCheckedChange = {
-                    onChangeAutoOption(autoOption.copy(autoWordSpeak = it))
+                    onChangeAutoOption(autoOption.copy(autoSpeakWord = it))
                 },
             )
         }

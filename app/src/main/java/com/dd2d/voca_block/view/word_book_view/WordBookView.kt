@@ -18,11 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.dd2d.voca_block.Preference
 import com.dd2d.voca_block.TTS
-import com.dd2d.voca_block.common.WordType
-import com.dd2d.voca_block.common.FontSize
 import com.dd2d.voca_block.common.LocalFontSize
-import com.dd2d.voca_block.struct.WordBookAutoOption
 import com.dd2d.voca_block.view.word_book_view.card.CardMode
 import com.dd2d.voca_block.view.word_book_view.category_selector.WordBookCategorySelectorView
 import com.dd2d.voca_block.view.word_book_view.setting_view.WordBookSettingView
@@ -41,18 +39,18 @@ fun WordBookView(
     val categoryList by categoryViewModel.category.collectAsState(initial = emptyList())
     val wordCategoryList by wordCategoryViewModel.selectedCategory.collectAsState(initial = emptyList())
 
-    val wordType by remember { mutableStateOf(WordType.EnKr) }
     val context = LocalContext.current
-    val tts by remember { mutableStateOf(TTS.getInstance(context, wordType)) }
+    val pref = Preference(context)
+    val wordType by remember { mutableStateOf(WordType.EnKr) }
+    val tts = remember { TTS(context) }
 
-    var wordMode by remember { mutableStateOf<WordMode>(WordMode.Card) }
-    var autoOption by remember { mutableStateOf(WordBookAutoOption(autoScroll = true)) }
+    var wordMode by remember { mutableStateOf(pref.getWordMode()) }
+    var autoOption by remember { mutableStateOf(pref.getAutoOption()) }
 
     var isOpenCategorySelector by remember { mutableStateOf(false) }
-    var isOpenSetting by remember { mutableStateOf(true) }
+    var isOpenSetting by remember { mutableStateOf(false) }
 
-
-    var fontSize by remember { mutableStateOf(FontSize.Default) }
+    var fontSize by remember { mutableStateOf(pref.getFontSize()) }
     CompositionLocalProvider(
         LocalFontSize provides fontSize
     ) {
@@ -67,8 +65,8 @@ fun WordBookView(
                         tts = tts,
                         wordList = wordList,
                         categoryList = categoryList,
+                        autoOption = autoOption,
                         wordCategoryList = wordCategoryList,
-                        onChangeMode = { mode -> wordMode = mode },
                         onChangeMemorize = { word, isMemorized ->  wordsViewModel.updateWordMemorized(word, isMemorized) },
                         onUpdateWordCategory = { wordId, categoryId, onCategory -> wordCategoryViewModel.updateWordCategory(wordId, categoryId, onCategory) }
                     )
@@ -78,7 +76,6 @@ fun WordBookView(
                 }
             }
 
-
             IconButton(onClick = { isOpenSetting = !isOpenSetting }, modifier = modifier.align(Alignment.TopEnd)) {
                 Icon(imageVector = if(isOpenSetting) Icons.Default.Close else Icons.Default.Settings, contentDescription = "")
             }
@@ -87,9 +84,9 @@ fun WordBookView(
                 wordMode = wordMode,
                 fontSize = fontSize,
                 autoOption = autoOption,
-                onChangeWordMode = { wordMode = it },
-                onChangeFontSize = { fontSize = it },
-                onChangeAutoOption = { autoOption = it },
+                onChangeWordMode = { wordMode = it; pref.setWordMode(it) },
+                onChangeFontSize = { fontSize = it; pref.setFontSize(it) },
+                onChangeAutoOption = { autoOption = it; pref.setAutoOption(it) },
                 modifier = modifier.align(Alignment.BottomCenter)
             )
 
