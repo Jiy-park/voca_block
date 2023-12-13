@@ -21,7 +21,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.dd2d.voca_block.common.AppState
-import com.dd2d.voca_block.common.Screen
+import com.dd2d.voca_block.common.MainScreen
 import com.dd2d.voca_block.common.TT
 
 @Composable
@@ -39,8 +39,7 @@ fun MainViewBottomPanel(
         modifier = modifier
             .height(if(appState == AppState.Intro) 0.dp else 50.dp)
     ) {
-        // drop(1): IntroView 제외
-        Screen.values().drop(1).forEach { screen ->
+        MainScreen.values().forEach { screen ->
             val isTabSelected = currentTab?.destination?.route == screen.name
             val animatedTabHeight by animateIntOffsetAsState(
                 targetValue = if(isTabSelected) IntOffset(0, -30) else IntOffset(0, 0),

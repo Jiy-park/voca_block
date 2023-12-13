@@ -56,29 +56,28 @@ fun CardModeView(
             while(autoOption.autoScroll){
                 var isBeforeSpeakWord = autoOption.autoSpeakWord
                 var isBeforeSpeakMean = autoOption.autoSpeakMean
-
-                    tts.ttsState.collect{ state->
-                        when(state){
-                            TTSState.OnReady -> {
-                                if(isBeforeSpeakWord){
-                                    val detailType = WordType.values()[word.wordType].type.wordType
-                                    tts.speak(text = word.word, detailType = detailType, speakTarget = SpeakTarget.Word)
-                                }
-                                else if(isBeforeSpeakMean){
-                                    val detailType = WordType.values()[word.wordType].type.meanType
-                                    tts.speak(text = word.mean, detailType = detailType, speakTarget = SpeakTarget.Mean)
-                                }
-                                else{
-                                    delay(autoOption.autoScrollDelay)
-                                    if(pagerState.canScrollForward){
-                                        pagerState.animateScrollToPage(pagerState.currentPage+1)
-                                        moveTrigger = !moveTrigger
-                                    }
+                tts.ttsState.collect{ state->
+                    when(state){
+                        TTSState.OnReady -> {
+                            if(isBeforeSpeakWord){
+                                val detailType = WordType.values()[word.wordType].type.wordType
+                                tts.speak(text = word.word, detailType = detailType, speakTarget = SpeakTarget.Word)
+                            }
+                            else if(isBeforeSpeakMean){
+                                val detailType = WordType.values()[word.wordType].type.meanType
+                                tts.speak(text = word.mean, detailType = detailType, speakTarget = SpeakTarget.Mean)
+                            }
+                            else{
+                                delay(autoOption.autoScrollDelay)
+                                if(pagerState.canScrollForward){
+                                    pagerState.animateScrollToPage(pagerState.currentPage+1)
+                                    moveTrigger = !moveTrigger
                                 }
                             }
-                            TTSState.OnSpeakWord -> { isBeforeSpeakWord = false }
-                            TTSState.OnSpeakMean -> { isBeforeSpeakMean = false }
                         }
+                        TTSState.OnSpeakWord -> { isBeforeSpeakWord = false }
+                        TTSState.OnSpeakMean -> { isBeforeSpeakMean = false }
+                    }
                 }
 
             }
@@ -138,7 +137,7 @@ fun CardModeView(
                     animationSpec = tween(500)
                 ){ -it*2 }
             ) {
-                CategorySelector(
+                WordCategorySelector(
                     wordCategory = getWordCategory(word, categoryList, wordCategoryList)
                 ){
                     it?.let { afterSelect->

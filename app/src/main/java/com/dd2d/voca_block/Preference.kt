@@ -10,7 +10,7 @@ import com.dd2d.voca_block.view.word_book_view.WordModeValues
 class Preference(context: Context){
     private val pref = context.getSharedPreferences(PrefName, Context.MODE_PRIVATE)
 
-    fun getMotivationWord() = pref.getString(MotivationWord, "")
+    fun getMotivationWord() = pref.getString(MotivationWord, "")?: ""
     fun setMotivationWord(motivation: String){
         val edit = pref.edit()
         edit.putString(MotivationWord, motivation)

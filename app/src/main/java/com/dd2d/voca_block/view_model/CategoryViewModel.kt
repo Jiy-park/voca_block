@@ -24,9 +24,9 @@ class CategoryViewModel(categoryModel: CategoryModel): ViewModel() {
         }
     }
 
-    fun addNewCategory(name: String, description: String){
+    fun insertCategory(category: Category){
         viewModelScope.launch(Dispatchers.IO){
-            model.insert(Category(name = name, description = description))
+            model.insert(category)
         }
     }
 

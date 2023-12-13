@@ -3,13 +3,10 @@ package com.dd2d.voca_block.view.main_view
 import android.app.Activity
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,8 +22,9 @@ import androidx.navigation.compose.rememberNavController
 import com.dd2d.voca_block.Preference
 import com.dd2d.voca_block.common.AppState
 import com.dd2d.voca_block.common.Common.DoubleBackPressInterval
-import com.dd2d.voca_block.common.Screen
-import com.dd2d.voca_block.common.TT
+import com.dd2d.voca_block.common.MainScreen
+import com.dd2d.voca_block.common.SubScreen
+import com.dd2d.voca_block.view.categorySelectorGraph
 import com.dd2d.voca_block.view.intro_view.IntroView
 import com.dd2d.voca_block.view.mainGraph
 import com.dd2d.voca_block.view_model.CategoryViewModel
@@ -63,38 +61,21 @@ fun MainView(
     val currentTab by navController.currentBackStackEntryAsState()
 
     val context = LocalContext.current
-    var motivationWord by remember { mutableStateOf(Preference(context).getMotivationWord()) }
+    val pref = Preference(context)
+    var motivationWord by remember { mutableStateOf(pref.getMotivationWord()) }
 
     DoubleBackPressToFinish()
 
     Scaffold(
         topBar = {
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                TextButton(
-                    onClick = {
-
-                    }
-                ) {
-                    TT(text = "1")
-                }
-                TextButton(
-                    onClick = {
-
-                    }
-                ) {
-                    TT(text = "2")
-                }
+            MainViewTopPanel(
+                modifier = modifier,
+                appState = appState,
+                motivationWord = motivationWord,
+            ){ after->
+                pref.setMotivationWord(after)
+                motivationWord = after
             }
-//            MainViewTopPanel(
-//                modifier = modifier,
-//                appState = appState,
-//                motivationWord = motivationWord,
-//            ){ after->
-//                pref.setMotivationWord(after)
-//                motivationWord = after
-//            }
         },
         bottomBar = {
             MainViewBottomPanel(
@@ -109,16 +90,16 @@ fun MainView(
     ) { innerPadding->
         NavHost(
             navController = navController,
-            startDestination = if(appState == AppState.Intro) Screen.Intro.name else Screen.WordBook.name,
+            startDestination = if(appState == AppState.Intro) SubScreen.Intro.name else MainScreen.WordBook.name,
             modifier = modifier.padding(innerPadding)
         ){
-            composable(route = Screen.Intro.name){
+            composable(route = SubScreen.Intro.name){
                 IntroView(
                     onFail = {  },
                     onComplete = {
                         appState = AppState.Main
                         navController.popBackStack()
-                        navController.navigate(route = Screen.WordBook.name){
+                        navController.navigate(route = MainScreen.WordBook.name){
                             popUpTo(navController.graph.findStartDestination().id)
                             launchSingleTop = true
                             restoreState = true
@@ -127,6 +108,12 @@ fun MainView(
                 )
             }
             mainGraph(
+                navController = navController,
+                wordsViewModel = wordsViewModel,
+                categoryViewModel = categoryViewModel,
+                wordCategoryViewModel = wordCategoryViewModel,
+            )
+            categorySelectorGraph(
                 navController = navController,
                 wordsViewModel = wordsViewModel,
                 categoryViewModel = categoryViewModel,

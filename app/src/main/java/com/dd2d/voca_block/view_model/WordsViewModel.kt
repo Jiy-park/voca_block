@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dd2d.voca_block.model.WordsModel
 import com.dd2d.voca_block.struct.Word
-import com.dd2d.voca_block.view.word_book_view.category_selector.CategorySelectorValue
+import com.dd2d.voca_block.view.category_selector_view.CategorySelectorValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

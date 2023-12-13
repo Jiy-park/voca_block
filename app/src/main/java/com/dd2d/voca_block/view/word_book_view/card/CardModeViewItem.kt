@@ -60,7 +60,7 @@ import kotlin.math.absoluteValue
  * @param[wordCategory] 해당 단어의 카테고리를 리스트 형태로 받아옴. 카테고리에  속하는 경우 true 표시
  * @param[onEndSelect] 카테고리 선택 창 종료 시 호출. 1.TopEnd 버튼으로 종료 시 null 반환. 2. 선택 완료 시 카테고리 아이디와 체크 결과를 Pair로 묶어 리스트 형태로 반환*/
 @Composable
-fun CategorySelector(
+fun WordCategorySelector(
     modifier: Modifier = Modifier,
     wordCategory: List<Pair<Category, Boolean>>,
     onEndSelect: (afterSelectList: List<Pair<Int, Boolean>>?)->Unit,

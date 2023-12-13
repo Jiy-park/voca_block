@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.Flow
 data class Category(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("category_id")
-    val id: Int = 0,
-    val name: String,
-    val description: String = "내용 없음.",
+    var id: Int = 0,
+    var name: String = "",
+    var description: String = "",
 )
 
 @Dao

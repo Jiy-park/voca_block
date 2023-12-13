@@ -3,6 +3,7 @@ package com.dd2d.voca_block.model
 import android.util.Log
 import com.dd2d.voca_block.DB
 import com.dd2d.voca_block.struct.Category
+import com.dd2d.voca_block.util.ll
 
 class CategoryModel(db: DB){
     private val categoryModel: DB

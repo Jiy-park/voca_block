@@ -22,7 +22,6 @@ import com.dd2d.voca_block.Preference
 import com.dd2d.voca_block.TTS
 import com.dd2d.voca_block.common.LocalFontSize
 import com.dd2d.voca_block.view.word_book_view.card.CardMode
-import com.dd2d.voca_block.view.word_book_view.category_selector.WordBookCategorySelectorView
 import com.dd2d.voca_block.view.word_book_view.setting_view.WordBookSettingView
 import com.dd2d.voca_block.view_model.CategoryViewModel
 import com.dd2d.voca_block.view_model.WordCategoryViewModel
@@ -33,7 +32,8 @@ fun WordBookView(
     modifier: Modifier = Modifier,
     wordsViewModel: WordsViewModel,
     categoryViewModel: CategoryViewModel,
-    wordCategoryViewModel: WordCategoryViewModel
+    wordCategoryViewModel: WordCategoryViewModel,
+    onOpenCategorySelectorView: ()->Unit,
 ){
     val wordList by wordsViewModel.wordList.collectAsState(initial = emptyList())
     val categoryList by categoryViewModel.category.collectAsState(initial = emptyList())
@@ -90,17 +90,17 @@ fun WordBookView(
                 modifier = modifier.align(Alignment.BottomCenter)
             )
 
-            IconButton(onClick = { isOpenCategorySelector = true }) {
+            IconButton(onClick = { onOpenCategorySelectorView() }) {
                 Icon(imageVector = Icons.Default.List, contentDescription = "")
             }
-            WordBookCategorySelectorView(
-                isOpenCategorySelector = isOpenCategorySelector,
-                categoryList = categoryList,
-                onDismissRequest = { isOpenCategorySelector = false },
-                onClickCategory = { categoryId-> wordsViewModel.selectByCategoryId(categoryId) },
-                onEditCategory = { after-> categoryViewModel.updateCategory(after) },
-                modifier = modifier
-            )
+//            CategorySelectorView(
+//                isOpenCategorySelector = isOpenCategorySelector,
+//                categoryList = categoryList,
+//                onDismissRequest = { isOpenCategorySelector = false },
+//                onClickCategory = { categoryId-> wordsViewModel.selectByCategoryId(categoryId) },
+//                onEditCategory = { after-> categoryViewModel.updateCategory(after) },
+//                modifier = modifier
+//            )
         }
     }
 }
